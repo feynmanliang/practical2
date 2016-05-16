@@ -233,3 +233,32 @@ for i = 1,(#data)[1] do
    print(string.format("%2d  %6.2f %6.2f", i, myPrediction[1], text[i]))
 end
 
+-- handin (2)
+dataTest = torch.Tensor{
+   {6, 4},
+   {10, 5},
+   {14, 8}
+}
+print('id  approx   text')
+for i = 1,(#dataTest)[1] do
+   local myPrediction = model:forward(dataTest[i])
+   print(string.format("%2d  %6.2f %6.2f", i, myPrediction[1], text[i]))
+end
+
+print(model:get(1).weight)
+--  0.6695  1.1128
+--  [torch.DoubleTensor of size 1x2]
+print(model:get(1).bias)
+--  31.6161
+--  [torch.DoubleTensor of size 1]
+
+-- handin (3)
+X = torch.ones(#data)
+X[{ {}, {1,2} }] = data[{ {}, {2,3} }]
+y = data[{ {}, {3} }]
+beta = torch.inverse(X:t() * X) * X:t() * y
+print(beta)
+-- 0.6501
+-- 1.1099
+-- 31.9807
+-- [torch.DoubleTensor of size 3x1]
